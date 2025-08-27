@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aliffakmal1506-hub.github.io/UniHelper/sitemap.xml
