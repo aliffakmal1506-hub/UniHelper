@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniHelper - Your University Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: white;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+        
+        .feature-card {
+            width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 30px;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(to right, #1a2a6c, #b21f1f);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .content-sections {
+            margin: 40px 0;
+        }
+        
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content-section h2 {
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fdbb2d;
+        }
+        
+        .content-section h3 {
+            color: #b21f1f;
+            margin: 20px 0 10px;
+        }
+        
+        .content-section ul, .content-section ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .content-section li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .back-to-top {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1a2a6c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-to-top:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        .unipartner-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+        }
+        .unipartner-section h2 {
+            color: #1a2a6c;
+            margin-bottom: 20px;
+        }
+        .unipartner-section p {
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+            color: #444;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .logo h1 {
+                font-size: 2.2rem;
+            }
+            
+            .feature-card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>UniHelper</h1>
+            </div>
+            <p class="tagline">Your complete guide for navigating university life successfully</p>
+        </header>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-suitcase"></i>
+                </div>
+                <h3>What to Pack for College</h3>
+                <p>Not sure what to bring? We've got a comprehensive packing list that covers all essentials from dorm supplies to study materials.</p>
+                <button class="btn show-content" data-target="packing">Get Packing List</button>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-week"></i>
+                </div>
+                <h3>First Week as a Freshman</h3>
+                <p>Your first week can be overwhelming. Learn how to navigate campus, make friends, and start your classes on the right foot.</p>
+                <button class="btn show-content" data-target="firstweek">First Week Guide</button>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h3>How to Save Money</h3>
+                <p>University life doesn't have to break the bank. Discover smart budgeting tips, student discounts, and money-saving strategies.</p>
+                <button class="btn show-content" data-target="savingmoney">Money Tips</button>
+            </div>
+        </div>
+        
+        <div class="content-sections">
+            <div id="packing" class="content-section">
+                <h2><i class="fas fa-suitcase"></i> What to Pack for College</h2>
+                
+                <h3>Essential Documents</h3>
+                <ul>
+                    <li>ID and driver's license</li>
+                    <li>Health insurance cards</li>
+                    <li>University acceptance letter</li>
+                    <li>Bank account information</li>
+                    <li>Important medical records</li>
+                </ul>
+                
+                <h3>Dorm Room Essentials</h3>
+                <ul>
+                    <li>Bedding (sheets, pillows, comforter)</li>
+                    <li>Towels and bathroom supplies</li>
+                    <li>Storage solutions</li>
+                    <li>Desk lamp and organizers</li>
+                    <li>Laundry basket and supplies</li>
+                </ul>
+                
+                <h3>Academic Supplies</h3>
+                <ul>
+                    <li>Laptop and charger</li>
+                    <li>Notebooks and pens</li>
+                    <li>Textbooks (wait until syllabus confirms)</li>
+                    <li>Backpack</li>
+                    <li>Planner or calendar</li>
+                </ul>
+                
+                <h3>Personal Items</h3>
+                <ul>
+                    <li>Clothes for all seasons</li>
+                    <li>Comfortable walking shoes</li>
+                    <li>Toiletries and personal care items</li>
+                    <li>Medications and first aid kit</li>
+                    <li>Photos and items from home</li>
+                </ul>
+                
+                <a href="#" class="back-to-top">Back to Top</a>
+            </div>
+            
+            <div id="firstweek" class="content-section">
+                <h2><i class="fas fa-calendar-week"></i> First Week as a Freshman</h2>
+                
+                <h3>Before Classes Start</h3>
+                <ol>
+                    <li>Complete any orientation activities</li>
+                    <li>Find your classes before the first day</li>
+                    <li>Set up your dorm room</li>
+                    <li>Meet your roommate and neighbors</li>
+                    <li>Locate important buildings (dining hall, library, health center)</li>
+                </ol>
+                
+                <h3>Academic Preparation</h3>
+                <ol>
+                    <li>Purchase required textbooks</li>
+                    <li>Set up your student portal and email</li>
+                    <li>Introduce yourself to professors during office hours</li>
+                    <li>Buy a planner and note important dates</li>
+                    <li>Find study spots around campus</li>
+                </ol>
+                
+                <h3>Social Tips</h3>
+                <ol>
+                    <li>Attend welcome events and activities</li>
+                    <li>Join clubs or organizations that interest you</li>
+                    <li>Keep your door open to meet people in your dorm</li>
+                    <li>Don't be afraid to introduce yourself to classmates</li>
+                    <li>Remember that everyone is looking to make friends too</li>
+                </ol>
+                
+                <h3>Self-Care</h3>
+                <ol>
+                    <li>Establish a sleep routine</li>
+                    <li>Find healthy food options on campus</li>
+                    <li>Learn where the health center is located</li>
+                    <li>Take time to relax and adjust</li>
+                    <li>Call home if you're feeling homesick</li>
+                </ol>
+                
+                <a href="#" class="back-to-top">Back to Top</a>
+            </div>
+            
+            <div id="savingmoney" class="content-section">
+                <h2><i class="fas fa-piggy-bank"></i> How to Save Money in College</h2>
+                
+                <h3>Budgeting Basics</h3>
+                <ul>
+                    <li>Track your expenses for a month to understand spending patterns</li>
+                    <li>Create a realistic budget that includes all expenses</li>
+                    <li>Use budgeting apps to help manage your money</li>
+                    <li>Set aside savings before spending on non-essentials</li>
+                    <li>Review and adjust your budget monthly</li>
+                </ul>
+                
+                <h3>Textbook Savings</h3>
+                <ul>
+                    <li>Buy used textbooks or rent them</li>
+                    <li>Check library reserves before purchasing</li>
+                    <li>Look for international editions which are often cheaper</li>
+                    <li>Share textbooks with classmates when possible</li>
+                    <li>Sell books back at the end of the semester</li>
+                </ul>
+                
+                <h3>Food Expenses</h3>
+                <ul>
+                    <li>Meal prep to avoid expensive takeout</li>
+                    <li>Take advantage of student discounts at local restaurants</li>
+                    <li>Never go grocery shopping hungry</li>
+                    <li>Use your meal plan effectively</li>
+                    <li>Host potlucks with friends instead of eating out</li>
+                </ul>
+                
+                <h3>Student Discounts</h3>
+                <ul>
+                    <li>Always ask about student discounts (many places offer 10-15% off)</li>
+                    <li>Use your student ID for discounts on software, streaming services, and more</li>
+                    <li>Look for student priced events on campus</li>
+                    <li>Take advantage of free campus activities</li>
+                    <li>Use student travel discounts for breaks and weekends</li>
+                </ul>
+                
+                <a href="#" class="back-to-top">Back to Top</a>
+            </div>
+        </div>
+
+        <div class="unipartner-section">
+            <h2>UniHelper - Your Complete University Assistant</h2>
+            <p>UniHelper is a complete platform that guides you through every stage of your university journey. From finding the right university and program, to offering helpful guides, checklists, and resources, UniHelper makes sure you’re prepared, organized, and supported throughout your studies.</p>
+            <a href="unihelper.html" class="btn">Explore UniHelper <i class="fas fa-external-link-alt"></i></a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>UniHelper &copy; 2023 | Created with ❤️ for students worldwide</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all buttons that show content
+            const buttons = document.querySelectorAll('.show-content');
+            const sections = document.querySelectorAll('.content-section');
+            
+            // Add click event to each button
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show the targeted section
+                    document.getElementById(targetId).classList.add('active');
+                    
+                    // Scroll to the section
+                    document.getElementById(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Back to top functionality
+            const backToTopLinks = document.querySelectorAll('.back-to-top');
+            backToTopLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

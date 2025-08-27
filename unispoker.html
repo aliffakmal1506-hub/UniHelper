@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unispoker - AI University Interview Prep</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --lavender: #F0D3F7;
+            --dusty-rose: #B98EA7;
+            --muted-pink: #A57982;
+            --dark-blue: #302F4D;
+            --deep-navy: #120D31;
+            --accent: #8A95A5;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(rgba(18, 13, 49, 0.85), rgba(48, 47, 77, 0.9)), 
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            padding: 20px;
+            color: #F0D3F7;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(48, 47, 77, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--dark-blue) 50%, var(--muted-pink) 100%);
+            color: var(--lavender);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .mascot {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--dusty-rose) 0%, var(--muted-pink) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+        }
+        
+        .main-content {
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, rgba(48, 47, 77, 0.8) 0%, rgba(18, 13, 49, 0.8) 100%);
+            padding: 20px;
+            border-right: 1px solid var(--dusty-rose);
+        }
+        
+        .sidebar h3 {
+            color: var(--lavender);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--muted-pink);
+        }
+        
+        .topic-list {
+            list-style: none;
+        }
+        
+        .topic-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            background: rgba(185, 142, 167, 0.2);
+            border-left: 4px solid transparent;
+        }
+        
+        .topic-item i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+            color: var(--lavender);
+        }
+        
+        .topic-item:hover {
+            background: rgba(185, 142, 167, 0.4);
+            transform: translateX(5px);
+        }
+        
+        .topic-item.active {
+            background: linear-gradient(to right, var(--dark-blue) 0%, var(--muted-pink) 100%);
+            color: var(--lavender);
+            border-left: 4px solid var(--lavender);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--dusty-rose);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chat-header {
+            padding: 15px;
+            background: linear-gradient(to right, var(--dark-blue) 0%, var(--muted-pink) 100%);
+            color: var(--lavender);
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .chat-header i {
+            margin-right: 10px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: rgba(48, 47, 77, 0.7);
+            height: 300px;
+            background-image: 
+                linear-gradient(rgba(48, 47, 77, 0.7), rgba(48, 47, 77, 0.7)), 
+                url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23B98EA7' fill-opacity='0.1' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        
+        .message.mylo {
+            justify-content: flex-start;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message.ai {
+            justify-content: flex-start;
+        }
+        
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .mylo .message-bubble {
+            background: linear-gradient(to bottom right, rgba(48, 47, 77, 0.9) 0%, rgba(18, 13, 49, 0.9) 100%);
+            border: 1px solid var(--dusty-rose);
+            color: var(--lavender);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .user .message-bubble {
+            background: linear-gradient(to bottom right, var(--muted-pink) 0%, var(--dusty-rose) 100%);
+            color: var(--lavender);
+            border-bottom-right-radius: 4px;
+        }
+        
+        .ai .message-bubble {
+            background: linear-gradient(to bottom right, var(--dark-blue) 0%, var(--deep-navy) 100%);
+            color: var(--lavender);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-typing {
+            display: flex;
+            padding: 10px 15px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--lavender);
+            border-radius: 50%;
+            margin-right: 5px;
+            opacity: 0.6;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.6;
+            }
+            30% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
+        }
+        
+        .answer-options {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            background-color: rgba(48, 47, 77, 0.7);
+            border-top: 1px solid var(--dusty-rose);
+            gap: 10px;
+        }
+        
+        .answer-btn {
+            padding: 12px 15px;
+            background: rgba(185, 142, 167, 0.3);
+            border: 1px solid var(--dusty-rose);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+            color: var(--lavender);
+        }
+        
+        .answer-btn:hover {
+            background: linear-gradient(to right, var(--muted-pink) 0%, var(--dusty-rose) 100%);
+            color: var(--lavender);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tips-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(to right, rgba(48, 47, 77, 0.7) 0%, rgba(18, 13, 49, 0.7) 100%);
+            border-radius: 10px;
+            border-left: 5px solid var(--dusty-rose);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tips-header {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--lavender);
+            display: flex;
+            align-items: center;
+        }
+        
+        .tips-header i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            color: var(--dusty-rose);
+        }
+        
+        .tips-content {
+            line-height: 1.6;
+            color: var(--lavender);
+        }
+        
+        .tips-content ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .tips-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .tips-content li:before {
+            content: "•";
+            color: var(--dusty-rose);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .feedback {
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            background: linear-gradient(to right, rgba(165, 121, 130, 0.3) 0%, rgba(185, 142, 167, 0.3) 100%);
+            border-left: 5px solid var(--muted-pink);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--lavender);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feedback-title i {
+            margin-right: 8px;
+            color: var(--dusty-rose);
+        }
+        
+        .unipartner-section {
+            background: linear-gradient(135deg, rgba(48, 47, 77, 0.8) 0%, rgba(18, 13, 49, 0.8) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 30px 20px 20px;
+            border-left: 5px solid var(--dusty-rose);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .unipartner-section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--dark-blue), var(--muted-pink), var(--dusty-rose), var(--lavender));
+        }
+        
+        .unipartner-section h2 {
+            color: var(--lavender);
+            margin-bottom: 20px;
+        }
+        
+        .unipartner-section p {
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+            color: var(--lavender);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(to right, var(--dark-blue) 0%, var(--muted-pink) 100%);
+            color: var(--lavender);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(240, 211, 247, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(to right, var(--muted-pink) 0%, var(--dark-blue) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn i {
+            margin-left: 8px;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--dusty-rose);
+            }
+            
+            .mascot {
+                position: static;
+                margin: 0 auto 15px;
+            }
+            
+            .unipartner-section {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Unispoker</div>
+            <div class="subtitle">University Interview Preparation</div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <h3>Interview Topics</h3>
+                <ul class="topic-list">
+                    <li class="topic-item active" data-topic="preparation"><i class="fas fa-clipboard-list"></i> How to Prepare</li>
+                    <li class="topic-item" data-topic="introduction"><i class="fas fa-user"></i> Introducing Yourself</li>
+                    <li class="topic-item" data-topic="why-uni"><i class="fas fa-university"></i> Why This University</li>
+                    <li class="topic-item" data-topic="strengths"><i class="fas fa-star"></i> Your Strengths</li>
+                    <li class="topic-item" data-topic="weaknesses"><i class="fas fa-balance-scale"></i> Your Weaknesses</li>
+                    <li class="topic-item" data-topic="goals"><i class="fas fa-bullseye"></i> Future Goals</li>
+                    <li class="topic-item" data-topic="questions"><i class="fas fa-question-circle"></i> Questions to Ask</li>
+                    <li class="topic-item" data-topic="tips"><i class="fas fa-lightbulb"></i> Interview Tips</li>
+                </ul>
+            </div>
+            
+            <div class="content-area">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <i class="fas fa-robot"></i> Chat with Mylo
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message mylo">
+                            <div class="message-bubble">
+                                Hi there! I'm Mylo, your interview assistant. Let's get you prepared for your university interview. Select a topic on the left to begin!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="answer-options" id="answer-options">
+                        <!-- Answer buttons will be dynamically inserted here -->
+                    </div>
+                </div>
+                
+                <div class="feedback">
+                    <div class="feedback-title">
+                        <i class="fas fa-robot"></i> Mylo's Feedback:
+                    </div>
+                    <div id="feedback-content">I'll analyze your responses and provide personalized feedback to help you improve.</div>
+                </div>
+                
+                <div class="tips-section">
+                    <div class="tips-header">
+                        <i class="fas fa-lightbulb"></i> Quick Tips
+                    </div>
+                    <div class="tips-content" id="tips-content">
+                        Select a topic from the sidebar to see tips and practice questions for that area of the interview.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="unipartner-section">
+            <h2>UniHelper - Your Complete University Assistant</h2>
+            <p>UniHelper is a complete platform that guides you through every stage of your university journey. From finding the right university and program, to offering helpful guides, checklists, and resources, UniHelper makes sure you're prepared, organized, and supported throughout your studies.</p>
+            <a href="unihelper.html" class="btn">Explore UniHelper <i class="fas fa-external-link-alt"></i></a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicItems = document.querySelectorAll('.topic-item');
+            const chatMessages = document.getElementById('chat-messages');
+            const answerOptions = document.getElementById('answer-options');
+            const tipsContent = document.getElementById('tips-content');
+            const feedbackContent = document.getElementById('feedback-content');
+            
+            let currentTopic = 'preparation';
+            let conversationHistory = [];
+            let currentQuestionIndex = 0;
+            
+            // Define the order of topics
+            const topicOrder = [
+                'preparation',
+                'introduction',
+                'why-uni',
+                'strengths',
+                'weaknesses',
+                'goals',
+                'questions',
+                'tips'
+            ];
+            
+            // Topic content data with multiple questions and answer options
+            const topicData = {
+                'preparation': {
+                    questions: [
+                        {
+                            question: "How would you prepare for your university interview?",
+                            options: [
+                                "I'd research the university and program thoroughly",
+                                "I'd practice common interview questions with friends",
+                                "I'd prepare questions to ask the interviewers",
+                                "I'd review my application materials and experiences"
+                            ],
+                            tips: `<p><strong>Preparation is key to interview success:</strong></p>
+                            <ul>
+                                <li>Research the university and your chosen program thoroughly</li>
+                                <li>Practice common interview questions with friends or family</li>
+                                <li>Prepare questions to ask the interviewers</li>
+                                <li>Plan your outfit in advance - business casual is usually appropriate</li>
+                                <li>Know your application materials well</li>
+                                <li>Get a good night's sleep before the interview</li>
+                                <li>Arrive early to allow time for unexpected delays</li>
+                            </ul>`
+                        },
+                        {
+                            question: "What would you do the day before the interview?",
+                            options: [
+                                "Review my notes and do a final practice session",
+                                "Make sure my outfit is ready and appropriate",
+                                "Plan my travel route to ensure I arrive on time",
+                                "Relax and do activities that help me reduce stress"
+                            ]
+                        }
+                    ]
+                },
+                'introduction': {
+                    questions: [
+                        {
+                            question: "How would you introduce yourself in the interview?",
+                            options: [
+                                "Start with a greeting and state my name clearly",
+                                "Briefly mention my educational background",
+                                "Share what interests me about my chosen field",
+                                "Keep it concise and focused on relevant information"
+                            ],
+                            tips: `<p><strong>Making a strong first impression:</strong></p>
+                            <ul>
+                                <li>Start with a confident greeting: "Good morning/afternoon"</li>
+                                <li>State your name clearly</li>
+                                <li>Mention your educational background briefly</li>
+                                <li>Share what interests you about your chosen field of study</li>
+                                <li>Keep it concise (1-2 minutes maximum)</li>
+                                <li>Maintain eye contact and smile</li>
+                                <li>Practice your introduction until it feels natural</li>
+                            </ul>`
+                        }
+                    ]
+                },
+                'why-uni': {
+                    questions: [
+                        {
+                            question: "Why did you choose this university?",
+                            options: [
+                                "Because of its excellent reputation in my field of interest",
+                                "Because of specific programs or courses that attracted me",
+                                "Because of opportunities like internships or research projects",
+                                "Because of the campus culture and student community"
+                            ],
+                            tips: `<p><strong>Show you've done your research:</strong></p>
+                            <ul>
+                                <li>Mention specific programs, courses, or professors that attracted you</li>
+                                <li>Talk about the university's reputation in your field of interest</li>
+                                <li>Reference campus facilities, resources, or opportunities that appeal to you</li>
+                                <li>Connect your goals with what the university offers</li>
+                                <li>Avoid generic answers like "It's a good school"</li>
+                                <li>Be genuine and specific in your response</li>
+                            </ul>`
+                        }
+                    ]
+                },
+                'strengths': {
+                    questions: [
+                        {
+                            question: "What are your greatest strengths?",
+                            options: [
+                                "I'm a strong problem-solver and critical thinker",
+                                "I work well in teams and collaborate effectively",
+                                "I'm highly organized and manage my time well",
+                                "I'm passionate and motivated about my field of study"
+                            ],
+                            tips: `<p><strong>Effectively highlighting your strengths:</strong></p>
+                            <ul>
+                                <li>Choose strengths relevant to academic success</li>
+                                <li>Provide specific examples to demonstrate each strength</li>
+                                <li>Mention both hard skills and soft skills</li>
+                                <li>Be honest but confident</li>
+                                <li>Connect your strengths to how they'll help you succeed at university</li>
+                                <li>Avoid sounding arrogant - stay humble</li>
+                            </ul>`
+                        }
+                    ]
+                },
+                'weaknesses': {
+                    questions: [
+                        {
+                            question: "What is your greatest weakness and how are you addressing it?",
+                            options: [
+                                "I sometimes take on too much and need to prioritize better",
+                                "I can be too much of a perfectionist at times",
+                                "I'm working on being more confident in speaking up",
+                                "I sometimes struggle with time management"
+                            ],
+                            tips: `<p><strong>Turning weaknesses into opportunities:</strong></p>
+                            <ul>
+                                <li>Choose a real but not debilitating weakness</li>
+                                <li>Show self-awareness and maturity</li>
+                                <li>Explain concrete steps you're taking to improve</li>
+                                <li>Demonstrate progress you've already made</li>
+                                <li>Frame weaknesses as areas for growth</li>
+                                <li>Avoid cliché answers or pretending to be perfect</li>
+                            </ul>`
+                        }
+                    ]
+                },
+                'goals': {
+                    questions: [
+                        {
+                            question: "What are your future goals?",
+                            options: [
+                                "I want to pursue a career in my chosen field after graduation",
+                                "I plan to continue my education with graduate studies",
+                                "I hope to gain practical experience through internships",
+                                "I want to develop specific skills during my university years"
+                            ],
+                            tips: `<p><strong>Articulating your aspirations:</strong></p>
+                            <ul>
+                                <li>Discuss both short-term (university) and long-term (career) goals</li>
+                                <li>Explain how this university program fits into your plans</li>
+                                <li>Be ambitious but realistic</li>
+                                <li>Show enthusiasm for your chosen field</li>
+                                <li>Mention how you plan to contribute to your field or community</li>
+                                <li>Connect your goals to your current skills and interests</li>
+                            </ul>`
+                        }
+                    ]
+                },
+                'questions': {
+                    questions: [
+                        {
+                            question: "What questions would you ask the interviewers?",
+                            options: [
+                                "Ask about research opportunities for undergraduates",
+                                "Inquire about internship or co-op programs",
+                                "Ask about student support services and resources",
+                                "Ask about opportunities for study abroad programs"
+                            ],
+                            tips: `<p><strong>Asking thoughtful questions:</strong></p>
+                            <ul>
+                                <li>Prepare 3-5 questions in advance</li>
+                                <li>Ask about opportunities for students in your program</li>
+                                <li>Inquire about research projects, internships, or study abroad options</li>
+                                <li>Ask about student support services</li>
+                                <li>Show genuine curiosity about the student experience</li>
+                                <li>Avoid questions easily answered by the website</li>
+                                <li>Don't ask about grades, admission chances, or easy courses</li>
+                            </ul>`
+                        }
+                    ]
+                },
+                'tips': {
+                    questions: [
+                        {
+                            question: "How should you behave during the interview?",
+                            options: [
+                                "Be polite and respectful to everyone I meet",
+                                "Maintain good posture and eye contact",
+                                "Listen carefully before answering questions",
+                                "Show enthusiasm for the university and my chosen field"
+                            ],
+                            tips: `<p><strong>Interview etiquette and behavior:</strong></p>
+                            <ul>
+                                <li>Be polite and respectful to everyone you meet</li>
+                                <li>Maintain good posture and eye contact</li>
+                                <li>Listen carefully before answering</li>
+                                <li>Think for a moment before responding to difficult questions</li>
+                                <li>Be authentic and genuine</li>
+                                <li>Show enthusiasm for the university and your chosen field</li>
+                                <li>Ask for clarification if you don't understand a question</li>
+                                <li>Thank the interviewers at the end</li>
+                            </ul>`
+                        }
+                    ]
+                }
+            };
+            
+            // Set up topic click events
+            topicItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Update active topic
+                    topicItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Set current topic
+                    currentTopic = this.getAttribute('data-topic');
+                    currentQuestionIndex = 0;
+                    
+                    // Update tips content
+                    tipsContent.innerHTML = topicData[currentTopic].questions[0].tips;
+                    
+                    // Start the conversation for this topic
+                    startTopicConversation();
+                });
+            });
+            
+            // Function to start a conversation for the selected topic
+            function startTopicConversation() {
+                // Clear previous messages except the first one
+                while (chatMessages.children.length > 1) {
+                    chatMessages.removeChild(chatMessages.lastChild);
+                }
+                
+                // Clear answer options
+                answerOptions.innerHTML = '';
+                
+                // Add Mylo's question to chat
+                addMessage(topicData[currentTopic].questions[currentQuestionIndex].question, 'mylo');
+                
+                // Add to conversation history
+                conversationHistory.push({
+                    role: 'assistant',
+                    content: topicData[currentTopic].questions[currentQuestionIndex].question
+                });
+                
+                // Display answer options
+                displayAnswerOptions(topicData[currentTopic].questions[currentQuestionIndex].options);
+                
+                // Scroll to bottom of chat
+                scrollChatToBottom();
+            }
+            
+            // Function to display answer options
+            function displayAnswerOptions(options) {
+                // Clear previous options
+                answerOptions.innerHTML = '';
+                
+                // Add new options as buttons
+                options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('answer-btn');
+                    button.textContent = option;
+                    button.addEventListener('click', function() {
+                        // Add user's selected answer to chat
+                        addMessage(option, 'user');
+                        
+                        // Add to conversation history
+                        conversationHistory.push({
+                            role: 'user',
+                            content: option
+                        });
+                        
+                        // Clear answer options after selection
+                        answerOptions.innerHTML = '';
+                        
+                        // Show typing indicator
+                        showTypingIndicator();
+                        
+                        // Get AI response after a short delay
+                        setTimeout(getAIResponse, 1500);
+                    });
+                    
+                    answerOptions.appendChild(button);
+                });
+            }
+            
+            // Function to add message to chat
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', sender);
+                
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.classList.add('message-bubble');
+                bubbleDiv.textContent = text;
+                
+                messageDiv.appendChild(bubbleDiv);
+                chatMessages.appendChild(messageDiv);
+                
+                scrollChatToBottom();
+            }
+            
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.classList.add('message', 'ai');
+                typingDiv.id = 'typing-indicator';
+                
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.classList.add('message-typing');
+                
+                for (let i = 0; i < 3; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('typing-dot');
+                    bubbleDiv.appendChild(dot);
+                }
+                
+                typingDiv.appendChild(bubbleDiv);
+                chatMessages.appendChild(typingDiv);
+                
+                scrollChatToBottom();
+            }
+            
+            // Function to remove typing indicator
+            function removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            // Function to scroll chat to bottom
+            function scrollChatToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to get AI response (simulated or real)
+            async function getAIResponse() {
+                removeTypingIndicator();
+                
+                // Simulated AI response
+                const simulatedResponse = generateSimulatedResponse(conversationHistory[conversationHistory.length - 1].content);
+                addMessage(simulatedResponse, 'ai');
+                conversationHistory.push({
+                    role: 'assistant',
+                    content: simulatedResponse
+                });
+                
+                // Move to next question if available
+                moveToNextQuestion();
+            }
+            
+            // Function to move to the next question in the topic
+            function moveToNextQuestion() {
+                currentQuestionIndex++;
+                
+                // If there are more questions in this topic, ask the next one
+                if (currentQuestionIndex < topicData[currentTopic].questions.length) {
+                    setTimeout(() => {
+                        addMessage(topicData[currentTopic].questions[currentQuestionIndex].question, 'mylo');
+                        conversationHistory.push({
+                            role: 'assistant',
+                            content: topicData[currentTopic].questions[currentQuestionIndex].question
+                        });
+                        
+                        displayAnswerOptions(topicData[currentTopic].questions[currentQuestionIndex].options);
+                    }, 1000);
+                } else {
+                    // If no more questions, move to the next topic
+                    moveToNextTopic();
+                }
+            }
+            
+            // Function to move to the next topic
+            function moveToNextTopic() {
+                const currentIndex = topicOrder.indexOf(currentTopic);
+                
+                // If there are more topics, move to the next one
+                if (currentIndex < topicOrder.length - 1) {
+                    const nextTopic = topicOrder[currentIndex + 1];
+                    
+                    // Update active topic in sidebar
+                    topicItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('data-topic') === nextTopic) {
+                            item.classList.add('active');
+                        }
+                    });
+                    
+                    // Set current topic
+                    currentTopic = nextTopic;
+                    currentQuestionIndex = 0;
+                    
+                    // Update tips content
+                    tipsContent.innerHTML = topicData[currentTopic].questions[0].tips;
+                    
+                    // Add message about moving to next topic
+                    setTimeout(() => {
+                        addMessage(`Great! Now let's move on to the next topic: ${document.querySelector('.topic-item.active').textContent.trim()}`, 'mylo');
+                        
+                        // Start the conversation for the new topic
+                        setTimeout(() => {
+                            addMessage(topicData[currentTopic].questions[currentQuestionIndex].question, 'mylo');
+                            conversationHistory.push({
+                                role: 'assistant',
+                                content: topicData[currentTopic].questions[currentQuestionIndex].question
+                            });
+                            
+                            displayAnswerOptions(topicData[currentTopic].questions[currentQuestionIndex].options);
+                        }, 1500);
+                    }, 1000);
+                } else {
+                    // If no more topics, provide feedback
+                    provideFeedback("Congratulations! You've completed all practice topics. You're now well-prepared for your university interview.");
+                }
+            }
+            
+            // Function to generate simulated AI response
+            function generateSimulatedResponse(userMessage) {
+                const responses = [
+                    "That's a good start! Try to provide more specific examples from your experiences.",
+                    "Great answer! You've demonstrated self-awareness and preparation.",
+                    "Interesting perspective. Consider how this aligns with the university's values and programs.",
+                    "You might want to expand on that point with a concrete example from your academic or extracurricular activities.",
+                    "Good response! Remember to keep your answers concise but detailed enough to showcase your strengths.",
+                    "That's a solid foundation. Now try to connect it to your future goals and how the university can help you achieve them.",
+                    "Well said! You're showing good communication skills and confidence.",
+                    "You've identified an important point. Now try to explain how you've worked to improve in this area.",
+                    "Good answer! Remember to maintain eye contact and a confident posture when delivering this in a real interview.",
+                    "That's a thoughtful response. You might also want to mention how this relates to your chosen field of study."
+                ];
+                
+                // Return a random response from the array
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            
+            // Function to provide feedback on user response
+            function provideFeedback(feedbackText) {
+                feedbackContent.textContent = feedbackText;
+            }
+            
+            // Initialize with first topic tips
+            tipsContent.innerHTML = topicData[currentTopic].questions[0].tips;
+        });
+    </script>
+</body>
+</html>
